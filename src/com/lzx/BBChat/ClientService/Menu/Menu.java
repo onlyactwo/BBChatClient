@@ -17,17 +17,17 @@ public class Menu {
     public static void showLoginMenu() {
         System.out.println(appName);
         System.out.println(blankSpace + "登录");
-        System.out.println( "输入\\back可返回上一级菜单 ： ");
+        System.out.println("输入\\back可返回上一级菜单 ： ");
     }
 
     //注册界面
     public static void showRegistrationMenu() {
         System.out.println(appName);
         System.out.println(blankSpace + "注册");
-        System.out.println( "输入\\back可返回上一级菜单 ： ");
+        System.out.println("输入\\back可返回上一级菜单 ： ");
     }
 
-   //普通用户功能界面
+    //普通用户功能界面
     public static void showNormalFunctionMenu(String username) {
         System.out.println(appName);
         System.out.println("尊敬的" + username + "欢迎您的使用! -.-");
@@ -35,7 +35,7 @@ public class Menu {
         System.out.println(blankSpace + "1.私聊");
         System.out.println(blankSpace + "2.群聊");
         System.out.println(blankSpace + "3.查看在线人员");
-        System.out.println( "输入\\back可返回上一级菜单 ： ");
+        System.out.println("输入\\back可返回上一级菜单 ： ");
 
     }
 
@@ -47,26 +47,26 @@ public class Menu {
         System.out.println(blankSpace + "1.私聊");
         System.out.println(blankSpace + "2.群聊");
         System.out.println(blankSpace + "3.查看在线人员");
-        System.out.println( "输入\\back可返回上一级菜单 ： ");
+        System.out.println("输入\\back可返回上一级菜单 ： ");
 
     }
 
-    public static void showPrivateChatMenu() {
+    public static void showPrivateChatMenu(String userName) {
         System.out.println(appName);
-        System.out.println(blankSpace + "私聊");
+        System.out.println(blankSpace + "尊敬的用户 " + userName + " 欢迎私聊");
         System.out.println("输入\\back可返回上一级菜单 ： ");
     }
 
     public static void showGroupMenu() {
         System.out.println(appName);
         System.out.println(blankSpace + "群聊");
-        System.out.println( "输入\\back可返回上一级菜单 ： ");
+        System.out.println("输入\\back可返回上一级菜单 ： ");
     }
 
     public static void showOnlineMenu() {
         System.out.println(appName);
         System.out.println("以下是在线人员： ");
-        System.out.println( "输入 \\flush,可刷新");
+        System.out.println("输入 \\flush,可刷新");
         System.out.println("输入\\back可返回上一级菜单 ： ");
     }
 

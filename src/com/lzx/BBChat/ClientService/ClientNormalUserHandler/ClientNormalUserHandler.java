@@ -2,6 +2,7 @@ package com.lzx.BBChat.ClientService.ClientNormalUserHandler;
 
 
 import com.lzx.BBChat.ClientService.Menu.Menu;
+import com.lzx.BBChat.ClientService.PrivateChatHandler.PrivateChatHandler;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -30,7 +31,10 @@ public class ClientNormalUserHandler {
             userOption = sc.nextLine();
             if(userOption.equals("1")){
                 //用户使用私聊功能
-
+                PrivateChatHandler.handlePrivateChat(userName,oos,ois);
+                //用户从私聊功能退出-》选择功能界面
+                //展示菜单
+                Menu.showNormalFunctionMenu(userName);
             }else if(userOption.equals("2")){
                 //用户使用群聊功能
 

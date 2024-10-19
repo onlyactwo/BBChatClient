@@ -57,12 +57,28 @@ public class PrivateChatHandler {
                     //判断验证情况
                     if(message_receive_check_user_state.equals(MessageType.MESSAGE_PRIVATE_USER_IS_NOT_EXIST)){
                         //该用户不存在
+                        System.out.println("该用户不存在！请检查用户名是否正确！");
+                        //重新向服务器发送私聊请求(不退出此方法)
+                        //服务器端返回等待响应状态了
 
                     }else if(message_receive_check_user_state.equals(MessageType.MESSAGE_PRIVATE_USER_ONLINE)){
                         //该用户在线
+                        //开启在线聊天功能
 
+                        //结束在线聊天功能以后客户端返回到选择功能界面
+                        return;
                     }else if(message_receive_check_user_state.equals(MessageType.MESSAGE_PRIVATE_USER_OFFLINE)){
                         //该用户离线
+                        //让用户继续选择是否选择继续发送消息
+                        //.......
+
+                        //发送消息
+                        //开启离线发送消息功能
+                        //.......
+
+                        //不发送消息
+                        //返回到选择功能界面
+                        return;
 
                     }
 

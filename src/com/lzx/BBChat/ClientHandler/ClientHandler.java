@@ -35,9 +35,9 @@ public class ClientHandler implements Runnable {
         while (true) {
             userOption = sc.nextLine();
             if (userOption.equals("1")) {
-                //用户请求登录
+                //用户请求登录,登录成功以后会返回用户名
                 ClientLoginHandler.handClientLogin(oos,ois);
-                Menu.showInitMenu();
+
                 //如果用户从登录界面退出 -》显示初始界面
                 Menu.showInitMenu();
             } else if (userOption.equals("2")) {

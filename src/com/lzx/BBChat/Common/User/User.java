@@ -26,8 +26,7 @@ public class User implements Serializable {
     public static final String IDENTITY_NORMAL = "IDENTITY_NORMAL";
     public static final String IDENTITY_MANAGER = "IDENTITY_MANAGER";
 
-    public User() {
-    }
+    public User() {}
 
     public User(String userName, String password) {
         this.userName = userName;
@@ -93,4 +92,5 @@ public class User implements Serializable {
     public void setOis(ObjectInputStream ois) {
         this.ois = ois;
     }
+
 }

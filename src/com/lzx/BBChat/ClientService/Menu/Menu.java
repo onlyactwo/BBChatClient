@@ -35,6 +35,7 @@ public class Menu {
         System.out.println(blankSpace + "1.私聊");
         System.out.println(blankSpace + "2.群聊");
         System.out.println(blankSpace + "3.查看在线人员");
+        System.out.println(blankSpace + "4.查看我的收件箱");
         System.out.println("输入\\back可返回上一级菜单 ： ");
 
     }
@@ -70,4 +71,9 @@ public class Menu {
         System.out.println("输入\\back可返回上一级菜单 ： ");
     }
 
+    public static void showMessageInBox(){
+        System.out.println(appName);
+        System.out.println(blankSpace + "信箱");
+        System.out.println("输入\\back可返回上一级菜单 ： ");
+    }
 }

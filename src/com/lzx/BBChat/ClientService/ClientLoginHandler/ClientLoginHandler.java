@@ -18,6 +18,8 @@ import java.io.ObjectOutputStream;
  * 2.响应服务器返回对于登录请求的结果
  * 3.如果可以登录，就收集用户的账号密码，发送user
  * 4.响应登录结果
+ *
+ * 如果登录成功，就返回该用户的名字
  */
 public class ClientLoginHandler {
     public static void handClientLogin(ObjectOutputStream oos,ObjectInputStream ois){
@@ -48,7 +50,7 @@ public class ClientLoginHandler {
                         oos.writeObject(user_exit);
                         oos.flush();
                         //客户端返回到初始化界面
-                        return;
+                        return ;
                     }
                     System.out.println("请输入您的密码: ");
                     user.setPassword(Utils.getString(0,20));
@@ -61,7 +63,7 @@ public class ClientLoginHandler {
                         oos.writeObject(user_exit);
                         oos.flush();
                         //客户端返回到初始化界面
-                        return;
+                        return ;
                     }
 
                     //将该User发送到客户端进行验证
@@ -79,7 +81,13 @@ public class ClientLoginHandler {
                         //调用ClientUseHandler,处理用户下一步的选择
                         System.out.println("登录成功");
                         ClientNormalUserHandler.handleClientNormalUser(user.getUserName(),oos,ois);
-                        //如果用户从功能界面返回，则直接退回到登录界面，继续提示输密码。。。。
+                        //如果用户从功能界面返回，则直接退回到初始界面，直接下线
+
+                        //向服务器发送下线通知
+                        //服务器只需要踢出该用户在online列表
+                        Message message_offline = new Message(user.getUserName(), "Server", "用户下线", Utils.getCurrentTime(), MessageType.MESSAGE_USER_OFFLINE_REQUEST);
+                        oos.writeObject(message_offline);
+                        return ;
 
                     }else if(message_receiveLoginResultFromServer.getMesType().equals(MessageType.MESSAGE_LOGIN_SUCCEED_MANAGER)){
                         /*
@@ -87,8 +95,13 @@ public class ClientLoginHandler {
                          */
                         //管理人员登录成功 -》进行管理人员使用处理
                         ClientManagerUserHandler.handleManagerUser();
-                        //如果用户从功能界面返回，则直接退回到登录界面，继续提示输密码。。。。
 
+                        //如果用户从功能界面返回，则直接退回到初始界面，用户下线
+                        //向服务器发送下线通知
+                        //服务器只需要踢出该用户在online列表
+                        Message message_offline = new Message(user.getUserName(), "Server", "用户下线", Utils.getCurrentTime(), MessageType.MESSAGE_USER_OFFLINE_REQUEST);
+                        oos.writeObject(message_offline);
+                        return ;
                     }else if(message_receiveLoginResultFromServer.getMesType().equals(MessageType.MESSAGE_LOGIN_FAILED)){
                         //登录失败
                         System.out.println("账号或密码有误！请重新输入：");
@@ -100,11 +113,10 @@ public class ClientLoginHandler {
                     //服务器拒绝登录 ---- 功能待做
                     System.out.println("服务器拒绝你的登录！");
                 }
+
             }
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 

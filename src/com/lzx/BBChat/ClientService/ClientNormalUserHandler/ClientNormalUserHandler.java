@@ -3,6 +3,8 @@ package com.lzx.BBChat.ClientService.ClientNormalUserHandler;
 
 import com.lzx.BBChat.ClientService.Menu.Menu;
 import com.lzx.BBChat.ClientService.PrivateChatHandler.PrivateChatHandler;
+import com.lzx.BBChat.ClientService.UserCheckMessageInBoxHandler.UserCheckMessageInBoxHandler;
+import com.lzx.BBChat.ClientService.UserCheckOnlinePeopleHandler.UserCheckOnlinePeopleHandler;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -38,9 +40,19 @@ public class ClientNormalUserHandler {
             }else if(userOption.equals("2")){
                 //用户使用群聊功能
 
+                //暂缓。。。。。。。。。
             }else if(userOption.equals("3")){
                 //用户使用查看在线人数功能
-
+                UserCheckOnlinePeopleHandler.handleUserCheckOnlinePeople(userName,oos,ois);
+                //用户从查看在线人员退出-》选择功能界面
+                //展示菜单
+                Menu.showNormalFunctionMenu(userName);
+            }else if(userOption.equals("4")){
+                //用户查看收件箱
+                UserCheckMessageInBoxHandler.handleUserCheckMessageInBox(userName,oos,ois);
+                //用户从查看收件箱功能退出-》选择功能界面
+                //展示菜单
+                Menu.showNormalFunctionMenu(userName);
             }else if(userOption.equals("\\back")){
                 //用户想要返回登录界面
                 return;

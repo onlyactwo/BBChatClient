@@ -1,12 +1,13 @@
 package com.lzx.BBChat.ClientService.PrivateChatHandler;
 
 import com.lzx.BBChat.ClientService.Menu.Menu;
+import com.lzx.BBChat.ClientService.UserOnlinePrivateChatHandler.UserOnlinePrivateChatHandler;
 import com.lzx.BBChat.Common.Message.Message;
 import com.lzx.BBChat.Common.Message.MessageType;
 import com.lzx.BBChat.Common.User.User;
 import com.lzx.BBChat.Common.Utils.Utils;
 
-import javax.rmi.CORBA.Util;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -55,30 +56,43 @@ public class PrivateChatHandler {
                     Message message_receive_check_user_state  = (Message) ois.readObject();
 
                     //判断验证情况
-                    if(message_receive_check_user_state.equals(MessageType.MESSAGE_PRIVATE_USER_IS_NOT_EXIST)){
+                    if(message_receive_check_user_state.getMesType().equals(MessageType.MESSAGE_PRIVATE_USER_IS_NOT_EXIST)){
                         //该用户不存在
                         System.out.println("该用户不存在！请检查用户名是否正确！");
                         //重新向服务器发送私聊请求(不退出此方法)
                         //服务器端返回等待响应状态了
 
-                    }else if(message_receive_check_user_state.equals(MessageType.MESSAGE_PRIVATE_USER_ONLINE)){
+                    }else if(message_receive_check_user_state.getMesType().equals(MessageType.MESSAGE_PRIVATE_USER_ONLINE)){
                         //该用户在线
                         //开启在线聊天功能
-
+                        UserOnlinePrivateChatHandler.handleUserOnlinePrivateChat(userName, targetUser.getUserName(),oos,ois);
                         //结束在线聊天功能以后客户端返回到选择功能界面
                         return;
-                    }else if(message_receive_check_user_state.equals(MessageType.MESSAGE_PRIVATE_USER_OFFLINE)){
+                    }else if(message_receive_check_user_state.getMesType().equals(MessageType.MESSAGE_PRIVATE_USER_OFFLINE)){
                         //该用户离线
                         //让用户继续选择是否选择继续发送消息
-                        //.......
 
-                        //发送消息
-                        //开启离线发送消息功能
-                        //.......
-
-                        //不发送消息
-                        //返回到选择功能界面
-                        return;
+                        System.out.println("该用户离线，是否继续发送消息？请输入Yes/No");
+                        String option;
+                        while (true) {
+                             option = Utils.getString(0,4);
+                             if(option.equals("No")||option.equals("no")){
+                                 //退出聊天
+                                 //告诉服务器
+                                 Message message_leave = new Message(userName, "Server", "退出私聊", Utils.getCurrentTime(), MessageType.MESSAGE_PRIVATE_CHAT_EXIT);
+                                 oos.writeObject(message_leave);
+                                 //这里直接退出到选择功能界面
+                                 return;
+                             }else if(option.equals("Yes")||option.equals("YES")){
+                                 //继续聊天
+                                 //开启离线发送消息功能(功能和在线的是一样的)
+                                 UserOnlinePrivateChatHandler.handleUserOnlinePrivateChat(userName, targetUser.getUserName(),oos,ois);
+                                 //这里直接退出到选择功能界面
+                                 return;
+                             }else {
+                                 System.out.println("请检查输入!");
+                             }
+                        }
 
                     }
 
